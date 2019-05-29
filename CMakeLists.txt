@@ -26,15 +26,14 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SSE_FLAGS} -march=native -fopenmp")
 # set(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -fPIC --shared -D_GLIBCXX_USE_CXX11_ABI=${TensorFlow_ABI}" )
 
-include_directories(SYSTEM "includes")
-include_directories(SYSTEM "/usr/include/opencv4")
+include_directories(SYSTEM ${OpenCV_INCLUDE_DIRS})
 add_executable(superpixel-analyzer "main.cc")
 target_link_libraries(superpixel-analyzer
     opencv_core
     opencv_highgui
     opencv_imgproc
     opencv_ximgproc
-    opencv_imgcodecs
     opencv_videoio
     opencv_video
+    opencv_imgcodecs
 )

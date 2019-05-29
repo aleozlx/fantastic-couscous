@@ -53,6 +53,8 @@ int main(int argc, char** argv)
             cout << "Could not initialize capturing..."<<capture<<"\n";
             return -1;
         }
+        cap.set(CAP_PROP_FRAME_WIDTH, 432);
+	cap.set(CAP_PROP_FRAME_HEIGHT, 240);
     }
     else
     {
@@ -63,7 +65,7 @@ int main(int argc, char** argv)
             return -1;
         }
     }
-
+    cout<<"Init GUI"<<endl;
     namedWindow(window_name, 0);
     createTrackbar("Algorithm", window_name, &algorithm, 2, 0);
     createTrackbar("Region size", window_name, &region_size, 200, 0);
@@ -82,12 +84,15 @@ int main(int argc, char** argv)
         else
             input_image.copyTo(frame);
 
-        if( frame.empty() )
-            break;
+        if( frame.empty() ) {
+            cout<<"No more frames"<<endl;
+	     	break;
+	}
 
-        result = frame;
+        //resize(frame, result, Size(256/9*16, 256));
+	result = frame;
         Mat converted;
-        cvtColor(frame, converted, COLOR_BGR2HSV);
+        cvtColor(result, converted, COLOR_BGR2HSV);
 
         double t = (double) getTickCount();
 
